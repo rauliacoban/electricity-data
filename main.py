@@ -1,6 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from time import sleep
+import json
 
 PATH = 'C:\Program Files (x86)\chromedriver.exe'
 driver = webdriver.Chrome(PATH)
@@ -30,14 +31,13 @@ def get_table_data():
     #the loop is needed because there is no way of knowing when the table is done loading
     rows = []
     while True:
-        sleep(2)
+        #sleep(2)
         new_rows = table.find_elements(By.TAG_NAME, 'tr')
         if len(new_rows) == len(rows):
             rows = new_rows
             break
         rows = new_rows
     rows.pop(0)
-    print('Finished reading rows')
 
     data = []
     for row in rows:
@@ -46,9 +46,7 @@ def get_table_data():
         data.append(Entry(*entries))
 
     for row in data:
-        print(row.nuclear)
-
-    return data
+        print(json.dumps(row.__dict__))
 
 get_table_data()
 driver.quit()
