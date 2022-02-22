@@ -18,29 +18,25 @@ const database = new Datastore(DATABASE_FILENAME);
 database.loadDatabase();
 
 app.get('/api', (request, response) =>{
-    
+    database.find({}, (err, data) =>{
+        if(err){
+            response.end();
+            console.error(err);
+        }
+        response.json(data);
+    });
 });
 
 app.post('/api', (request, response) =>{
-    response.text = '';
-
     const python = spawn('python', [SCRAPER_FILENAME]);
     python.stdout.on('data', (data) =>{
         const data_string = data.toString().trim()
         const rows = data_string.split('\n');
 
-        rows.forEach(row => {
-            
-            console.log('--------------------------------------------------------------------------------------------------------------------------------');
+        rows.forEach(row => {   
             const data_done = JSON.parse(row);
-            console.log(data_done);
-
             database.find({time: data_done.time}, (err, results) =>{
-                if(results.length)
-                {
-                    //response.text.concat(`entry at ${data_done.time} already in database`);
-                }
-                else
+                if(!results.length)
                     database.insert(data_done);    
             });
         });
