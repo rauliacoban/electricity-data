@@ -5,7 +5,7 @@ import json
 
 PATH = 'C:\Program Files (x86)\chromedriver.exe'
 driver = webdriver.Chrome(PATH)
-driver.implicitly_wait(120)
+driver.implicitly_wait(3)
 driver.get('https://www.transelectrica.ro/widget/web/tel/sen-grafic/-/SENGrafic_WAR_SENGraficportlet')
 
 class Entry:

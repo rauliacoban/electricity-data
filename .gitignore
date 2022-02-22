@@ -1,4 +1,8 @@
 venv
+.idea
+node_modules
+*.json
+*.db
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
