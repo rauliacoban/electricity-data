@@ -1,5 +1,6 @@
 const DATABASE_FILENAME = 'database.db'
 const PORT = 3000
+const SCRAPER_FILENAME = 'scraper.py'
 
 const express = require('express');
 const app = express();
@@ -23,7 +24,7 @@ app.get('/api', (request, response) =>{
 app.post('/api', (request, response) =>{
     response.text = '';
 
-    const python = spawn('python', ['main.py']);
+    const python = spawn('python', [SCRAPER_FILENAME]);
     python.stdout.on('data', (data) =>{
         const data_string = data.toString().trim()
         const rows = data_string.split('\n');
